@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+//import GeoLocator from './components/GeoLocator'
+import UseCurrentLocation from './components/UseCurrentLocation'
+
 import './App.css';
+import useCurrentLocation from './components/UseCurrentLocation';
+
+
+const geolocationOptions = {
+  // Using this option you can define when should the location request timeout and
+  // call the error callback with timeout message.
+  timeout: 1000 * 60 * 1 // 1 min (1000 ms * 60 sec * 1 minute = 60 000ms)
+};
 
 function App() {
+  const { location, error } = useCurrentLocation(geolocationOptions)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1>Behold, Geolocation!</h1>
+
+        {location ? (
+          <p>
+          Latitude: {location.latitude}           Longitude: { location.longitude }
+          </p>
+        ) : (
+          <p>
+          Loading...
+          </p>
+        )}
+        {error && <p>Location error: {error}</p>}
     </div>
   );
 }
